@@ -28,7 +28,7 @@ def index():
     )
     next_url = url_for('index', page=posts.next_num) if posts.has_next else None
     prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
-    return render_template('index.html', title="Home", posts=posts.items, next_url=next_url, prev_url=prev_url) 
+    return render_template('index.html', title="Home", posts=posts.items, next_url=next_url, prev_url=prev_url, form=form) 
    
 
 @app.route('/login', methods= ['POST', 'GET'])
