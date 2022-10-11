@@ -5,7 +5,9 @@ from flask_login import UserMixin
 from hashlib import md5
 from time import time
 import jwt
-from app import app
+
+import app
+
 
 followers = db.Table('followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
@@ -49,14 +51,14 @@ class User(db.Model, UserMixin):
     
     def follow(self, user):
         if not self.is_following(user):
-            self.follow.append(user)
+            self.followed.append(user)
     
     def is_following(self, user):
         return self.followed.filter(followers.c.followed_id == user.id).count() > 0
 
-    def unfollowe(self, user):
+    def unfollow(self, user):
         if self.is_following(user):
-            self.follow.remove(user)
+            self.followed.remove(user)
 
     def followed_posts(self):
         followed =  Post.query.join(
@@ -90,4 +92,5 @@ class Post(db.Model):
 
     def __repr__(self) -> str:
         return f'Post {self.body}'
+        
 

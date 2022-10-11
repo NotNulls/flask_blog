@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, SubmitField,PasswordField, EmailField, TextAreaField
-from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, Email
+from wtforms import EmailField, PasswordField, BooleanField, SubmitField, StringField
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from app.models import User
 
 class LoginForm(FlaskForm):
@@ -27,20 +27,9 @@ class RegistrationForm(FlaskForm):
         if email is not None:
             raise ValidationError('Please user a different email address.')
 
-
-
-class Emptyform(FlaskForm):
-    submit = SubmitField('Submit')
-
-class PostForm(FlaskForm):
-    post = TextAreaField(label='Write something', validators=[DataRequired(),Length(min=0,max=150)])
-    submit = SubmitField('Submit')
-
 class ResetPasswordRequestForm(FlaskForm):
     email = StringField(label='Email', validators=[DataRequired(),Email()])
     submit = SubmitField('Submit Password Reset')
-
-
     
 class ResetPasswordForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
