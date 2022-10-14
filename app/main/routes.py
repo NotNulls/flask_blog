@@ -1,7 +1,7 @@
 from app.main import bp
 from flask import render_template, redirect, url_for, request, flash,current_app
 from flask_login import current_user, login_required
-from app.main.forms import PostForm, Emptyform, EditProfileForm
+from app.main.forms import PostForm, Emptyform, EditProfileForm, SearchForm
 from datetime import datetime
 from app import db
 from app.models import Post, User
@@ -112,5 +112,20 @@ def explore():
     prev_url = url_for('main.explore', page = posts.prev_num) if posts.has_prev else None
     #we are rendering index.html since the pages that we desire are of similar content. Yet, we are not rendering form, since we do not want to write comment but rather to display them. Therefore we are adding a conditional to index.html so it wont't crash after trying to render the form.
     
-    return render_template('index.html', posts=posts.items, title='explore', next_url=next_url, prev_url=prev_url)
+    return render_template('searched_posts.html', posts=posts.items, title='Explore', next_url=next_url, prev_url=prev_url)
 
+@bp.context_processor
+def base():
+    form = SearchForm()
+    return dict(form=form)
+
+
+@bp.route('/search', methods=['POST'])
+@login_required
+def search():
+    form = SearchForm()
+    if form.validate_on_submit():
+        post_searched = form.searched.data
+        posts = Post.query.filter(Post.body.like('%' + post_searched + '%')).order_by(Post.timestamp.desc())
+        
+    return render_template('search.html', form=form, searched=post_searched, posts=posts) 

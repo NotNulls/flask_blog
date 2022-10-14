@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block navbar %}
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default justify-content-between">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -16,10 +16,18 @@
                 </button>
                 <a class="navbar-brand" href="{{ url_for('main.index') }}">Microblog</a>
             </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse vertical-align: middle" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('main.index') }}">Home</a></li>
-                    <li><a href="{{ url_for('main.explore') }}">Explore</a></li>
+                    <li><a href="{{ url_for('main.explore') }}">Explore</a></li>      
+                    {% if current_user.is_authenticated %}
+                    
+                    <li class="my-auto my-lg-0"><form class="form-inline my-auto my-lg-0" action="{{ url_for('main.search') }}" method="POST">
+                        {{ form.hidden_tag() }}
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searched">
+                        </form>
+                    </li>   
+                    {% endif %}  
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_anonymous %}

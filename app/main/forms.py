@@ -25,3 +25,6 @@ class Emptyform(FlaskForm):
 class PostForm(FlaskForm):
     post = TextAreaField(label='Write something', validators=[DataRequired(),Length(min=0,max=150)])
     submit = SubmitField('Submit')
+
+class SearchForm(FlaskForm):
+    searched = StringField('Searched', validators=[DataRequired()])
