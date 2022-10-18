@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from hashlib import md5
 from time import time
 import jwt
-from app import whooshee
+
 
 import app
 
@@ -86,7 +86,7 @@ class User(db.Model, UserMixin):
             return 
         return User.query.get(id)
 
-       
+
 class Post(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
@@ -96,6 +96,7 @@ class Post(db.Model):
 
     def __repr__(self) -> str:
         return f'Post {self.body}'
+
 
         
 

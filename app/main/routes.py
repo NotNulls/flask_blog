@@ -128,4 +128,4 @@ def search():
         post_searched = form.searched.data
         posts = Post.query.filter(Post.body.like('%' + post_searched + '%')).order_by(Post.timestamp.desc())
         
-    return render_template('search.html', form=form, searched=post_searched, posts=posts) 
+    return render_template('searched_posts.html', form=form, posts_searched=post_searched, posts=posts) 
