@@ -6,12 +6,20 @@
             </a>
         </td>
         <td>
+        {% set user_link %}
+        <span class="user_popup">
             <a href="{{ url_for('main.user', username=post.author.username) }}">
                 {{ post.author.username }}
             </a>
-            says:
-            <br>
-            {{ post.body }}
+        </span>
+        {% endset %}
+        <p>{{ user_link }}
+        said:</p>
+        {% if current_user.last_seen %} <p>{{ moment(current_user.last_seen).format('LLL') }}</p>{% endif %}
+        
+        <br>
+        <span id="post{{ post.id }}">{{ post.body }}</span>
+        
         </td>
     </tr>
 </table>

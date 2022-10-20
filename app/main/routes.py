@@ -44,7 +44,7 @@ def user(username):
     )
     form = Emptyform()
     return render_template('user.html', user=user,posts = posts, form=form)
-
+    
 
 @bp.route('/edit_profile', methods=['POST','GET'])
 @login_required
@@ -129,3 +129,11 @@ def search():
         posts = Post.query.filter(Post.body.like('%' + post_searched + '%')).order_by(Post.timestamp.desc())
         
     return render_template('searched_posts.html', form=form, posts_searched=post_searched, posts=posts) 
+
+@bp.route('/user/<username>/popup')
+@login_required
+def user_popup(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    form = Emptyform()
+    return render_template('user_popup.html', form=form, user=user)
+
